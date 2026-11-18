@@ -1,0 +1,1214 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gender & Subject Preference | Statistics Lab</title>
+
+<style>
+:root {
+  --primary:#4169e1;
+  --dark:#152542;
+  --muted:#71809b;
+  --background:#f5f7fc;
+  --border:#e1e8f4;
+  --green:#16a394;
+  --purple:#8961d4;
+  --orange:#f3a64a;
+}
+* {box-sizing:border-box}
+html {scroll-behavior:smooth}
+body {
+  margin:0;
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+  background:var(--background);
+  color:var(--dark);
+  line-height:1.65;
+}
+header {
+  background:linear-gradient(120deg,#172f69,#315fcb 70%,#5987e5);
+  color:white;
+  padding:70px 20px 100px;
+}
+.wrap {max-width:1150px;margin:auto}
+.eyebrow {
+  font-size:12px;
+  letter-spacing:2px;
+  font-weight:800;
+  text-transform:uppercase;
+  color:#c2d4ff;
+}
+h1 {
+  font-size:clamp(34px,5vw,54px);
+  line-height:1.15;
+  margin:15px 0;
+}
+header p {
+  max-width:700px;
+  color:#e3ebff;
+  font-size:17px;
+}
+.tag {
+  display:inline-block;
+  border:1px solid #ffffff55;
+  background:#ffffff20;
+  border-radius:25px;
+  padding:5px 13px;
+  font-size:12px;
+  margin:8px 8px 0 0;
+}
+main {
+  max-width:1150px;
+  margin:-47px auto 40px;
+  padding:0 20px;
+}
+.card {
+  background:white;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:29px;
+  margin-bottom:24px;
+  box-shadow:0 8px 32px #233e7910;
+}
+.card h2 {
+  color:#2853af;
+  font-size:23px;
+  margin:0 0 9px;
+}
+.card h3 {font-size:17px;margin:23px 0 10px}
+.subtitle {
+  color:var(--muted);
+  font-size:14px;
+  margin-top:0;
+}
+.section-number {
+  color:#7c98d4;
+  font-size:13px;
+  margin-right:8px;
+}
+.metrics {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+}
+.metric {
+  background:#f2f6ff;
+  border:1px solid #e2eafb;
+  padding:20px;
+  border-radius:14px;
+}
+.metric span {
+  color:#6b7b98;
+  font-size:12px;
+  font-weight:700;
+}
+.metric strong {
+  display:block;
+  margin-top:10px;
+  font-size:27px;
+  line-height:1.25;
+  color:#315fc9;
+  overflow-wrap:anywhere;
+}
+textarea {
+  width:100%;
+  min-height:195px;
+  border:1px solid #ccd8eb;
+  border-radius:12px;
+  background:#fafcff;
+  color:#23375d;
+  padding:16px;
+  font:13px/1.55 Consolas,monospace;
+  resize:vertical;
+}
+textarea:focus,select:focus {
+  outline:2px solid #9bb7fa;
+}
+.controls {
+  display:flex;
+  align-items:center;
+  gap:11px;
+  flex-wrap:wrap;
+  margin-top:16px;
+}
+button {
+  cursor:pointer;
+  border:0;
+  border-radius:10px;
+  background:var(--primary);
+  color:white;
+  font-weight:700;
+  font-size:13px;
+  padding:12px 18px;
+  transition:transform .2s,filter .2s;
+}
+button:hover {
+  filter:brightness(1.09);
+  transform:translateY(-1px);
+}
+button.secondary {
+  background:#eaf0ff;
+  color:#315dc1;
+}
+select {
+  padding:10px;
+  border:1px solid #d1daeb;
+  border-radius:9px;
+  color:#23375d;
+  background:white;
+}
+.table-container {
+  overflow-x:auto;
+  margin:19px 0;
+}
+table {
+  width:100%;
+  min-width:500px;
+  border-collapse:collapse;
+  text-align:center;
+  font-size:13px;
+}
+th {
+  padding:13px 10px;
+  background:#eef3ff;
+  color:#284878;
+}
+td {
+  padding:12px 10px;
+  border-bottom:1px solid #e5ebf5;
+}
+td:first-child {
+  font-weight:700;
+  text-align:left;
+}
+tfoot td {
+  background:#f0f5ff;
+  font-weight:800;
+}
+.note {
+  background:#eff5ff;
+  border-left:4px solid var(--primary);
+  padding:15px 18px;
+  border-radius:9px;
+  color:#3a5683;
+  font-size:14px;
+  margin:17px 0;
+}
+.note.warning {
+  background:#fff8e9;
+  border-color:#e9a332;
+  color:#825b17;
+}
+.note.error {
+  background:#fff0f2;
+  border-color:#dc4e65;
+  color:#973346;
+}
+.formula {
+  background:#f4f7fe;
+  border:1px solid #e5ebf8;
+  padding:21px;
+  text-align:center;
+  font:21px Georgia,serif;
+  border-radius:12px;
+  overflow-x:auto;
+}
+.theory-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+.theory-box {
+  background:#f7f9ff;
+  border:1px solid #e6edfb;
+  border-radius:13px;
+  padding:18px;
+  font-size:14px;
+}
+.theory-box h3 {
+  margin:0 0 9px;
+  color:#315bb2;
+}
+.result {
+  border-radius:14px;
+  padding:23px;
+  background:linear-gradient(115deg,#edf4ff,#fff);
+  border:1px solid #cfdef8;
+}
+.result h3 {margin-top:0;color:#2856b7}
+.legend {
+  display:flex;
+  gap:18px;
+  flex-wrap:wrap;
+  color:#667892;
+  font-size:13px;
+}
+.dot {
+  display:inline-block;
+  width:11px;
+  height:11px;
+  margin-right:6px;
+  border-radius:3px;
+}
+.chart-row {
+  margin:20px 0;
+  border-bottom:1px solid #edf1f7;
+  padding-bottom:17px;
+}
+.chart-label {
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  font-size:13px;
+  margin-bottom:9px;
+}
+.track {
+  height:14px;
+  background:#edf1f9;
+  border-radius:20px;
+  overflow:hidden;
+  margin-bottom:6px;
+}
+.fill {
+  height:100%;
+  border-radius:20px;
+  background:linear-gradient(90deg,#3e70e8,#87aaff);
+}
+.fill.expected {
+  background:linear-gradient(90deg,#0e9f94,#72d7c8);
+}
+footer {
+  padding:20px;
+  color:#8290a6;
+  text-align:center;
+  font-size:12px;
+}
+@media(max-width:760px) {
+  .metrics {grid-template-columns:1fr 1fr}
+  .theory-grid {grid-template-columns:1fr}
+  .card {padding:19px}
+}
+@media(max-width:420px) {
+  .metrics {grid-template-columns:1fr}
+}
+@media print {
+  header {padding:20px;background:#315fc9}
+  main {margin:15px auto}
+  .controls {display:none}
+  .card {box-shadow:none;break-inside:avoid}
+  textarea {min-height:90px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="wrap">
+  <div class="eyebrow"></div>
+  <h1>Statistical Independence</h1>
+  <p>
+    A statistical investigation of the relationship between
+    gender and students' preferred academic subjects,
+    using contingency tables and the Chi-Square test
+    of independence.
+  </p>
+  <span class="tag">60 Sample Observations</span>
+  <span class="tag">Categorical Data</span>
+  <span class="tag">Chi-Square Analysis</span>
+  <span class="tag">Interactive Visualizations</span>
+</div>
+</header>
+
+<main>
+
+<section class="card">
+  <h2><span class="section-number">01</span>Research Objective</h2>
+  <p>
+    This project investigates whether gender (X)
+    and academic subject preference (F) are
+    statistically associated.
+  </p>
+  <div class="theory-grid">
+    <div class="theory-box">
+      <h3>Variable X — Gender</h3>
+      Male, Female, and Non-binary
+    </div>
+    <div class="theory-box">
+      <h3>Variable F — Preferred Subject</h3>
+      Mathematics, Science, English, History, and Art
+    </div>
+  </div>
+  <div class="note">
+    <b>Research question:</b> Is students' preferred
+    academic subject statistically associated with gender?
+    The provided dataset is simulated for educational purposes
+    and does not represent a real student population.
+  </div>
+</section>
+
+<section class="card">
+  <h2><span class="section-number">02</span>Dataset Explorer</h2>
+  <p class="subtitle">
+    Edit the paired categorical observations below.
+    The first row should be X,F.
+  </p>
+
+  <textarea id="dataset"></textarea>
+
+  <div class="controls">
+    <button onclick="analyze()">Analyze Dataset</button>
+    <button class="secondary" onclick="loadSample()">Restore Sample</button>
+    <button class="secondary" onclick="clearDataset()">Clear</button>
+
+    <label for="alpha">Significance level</label>
+    <select id="alpha" onchange="analyze()">
+      <option value="0.01">α = 0.01</option>
+      <option value="0.05" selected>α = 0.05</option>
+      <option value="0.10">α = 0.10</option>
+    </select>
+  </div>
+  <div id="message"></div>
+</section>
+
+<div id="analysisResults" style="display:none">
+
+<section class="card">
+  <h2><span class="section-number">03</span>Dataset Overview</h2>
+  <div class="metrics">
+    <div class="metric">
+      <span>OBSERVATIONS</span>
+      <strong id="totalN">60</strong>
+    </div>
+    <div class="metric">
+      <span>X CATEGORIES</span>
+      <strong id="xCount">3</strong>
+    </div>
+    <div class="metric">
+      <span>F CATEGORIES</span>
+      <strong id="fCount">5</strong>
+    </div>
+    <div class="metric">
+      <span>DEGREES OF FREEDOM</span>
+      <strong id="degrees">8</strong>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2><span class="section-number">04</span>Observed Contingency Table</h2>
+  <p class="subtitle">
+    Observed joint frequencies with row and column marginal totals.
+  </p>
+  <div class="table-container" id="observedTable"></div>
+  <div class="note">
+    <b>Marginal frequencies</b> are the row and column totals.
+    <b>Joint frequencies</b> count observations belonging
+    to both categories simultaneously.
+  </div>
+</section>
+
+<section class="card">
+  <h2><span class="section-number">05</span>Relative Frequencies</h2>
+  <p class="subtitle">
+    Each value represents a percentage of the entire sample.
+    Marginal relative frequencies appear in the total
+    row and total column.
+  </p>
+  <div class="table-container" id="relativeTable"></div>
+  <div class="formula">
+    Relative Frequency = Observed Count / N
+  </div>
+</section>
+
+<section class="card">
+  <h2><span class="section-number">06</span>Conditional Frequencies</h2>
+
+  <h3>Subject Preference Given Gender</h3>
+  <p class="subtitle">
+    Each row adds up to 100%.
+  </p>
+  <div class="table-container" id="rowConditional"></div>
+
+  <h3>Gender Given Subject Preference</h3>
+  <p class="subtitle">
+    Each column adds up to 100%.
+  </p>
+  <div class="table-container" id="columnConditional"></div>
+
+  <div class="formula">
+    P(F = j | X = i) = n<sub>ij</sub> / n<sub>i·</sub>
+  </div>
+</section>
+
+<section class="card">
+  <h2><span class="section-number">07</span>Expected Frequencies</h2>
+  <p class="subtitle">
+    Expected frequencies are calculated under
+    the assumption that X and F are independent.
+  </p>
+
+  <div class="formula">
+    E<sub>ij</sub> =
+    (Row Total × Column Total) / N
+  </div>
+
+  <div class="table-container" id="expectedTable"></div>
+  <div id="expectedWarning"></div>
+</section>
+
+<section class="card">
+  <h2><span class="section-number">08</span>Chi-Square Test</h2>
+
+  <div class="theory-grid">
+    <div class="theory-box">
+      <h3>Null Hypothesis — H₀</h3>
+      Gender and subject preference are statistically independent.
+    </div>
+    <div class="theory-box">
+      <h3>Alternative Hypothesis — H₁</h3>
+      Gender and subject preference are statistically associated.
+    </div>
+  </div>
+
+  <h3>Chi-Square Statistic</h3>
+  <div class="formula">
+    χ² = Σ (Observed − Expected)² / Expected
+  </div>
+
+  <div class="metrics" style="margin-top:20px">
+    <div class="metric">
+      <span>CHI-SQUARE</span>
+      <strong id="chiValue"></strong>
+    </div>
+    <div class="metric">
+      <span>P-VALUE</span>
+      <strong id="pValue"></strong>
+    </div>
+    <div class="metric">
+      <span>ALPHA</span>
+      <strong id="alphaValue"></strong>
+    </div>
+    <div class="metric">
+      <span>CRAMÉR'S V</span>
+      <strong id="cramerValue"></strong>
+    </div>
+  </div>
+
+  <h3>Hypothesis Test Decision</h3>
+  <div class="result" id="decision"></div>
+</section>
+
+<section class="card">
+  <h2><span class="section-number">09</span>Data Visualization</h2>
+
+  <h3>Observed Frequency Heatmap</h3>
+  <p class="subtitle">
+    Darker blue cells indicate higher observed frequencies.
+  </p>
+  <div class="table-container" id="heatmap"></div>
+
+  <h3>Observed vs. Expected Frequencies</h3>
+  <div class="legend">
+    <span><i class="dot" style="background:#4169e1"></i>Observed</span>
+    <span><i class="dot" style="background:#16a394"></i>Expected</span>
+  </div>
+  <div id="barChart"></div>
+</section>
+
+<section class="card">
+  <h2><span class="section-number">10</span>Statistical Conclusion</h2>
+  <div class="result" id="conclusion"></div>
+
+  <div class="controls">
+    <button onclick="exportCSV()">Export Contingency Table</button>
+    <button class="secondary" onclick="window.print()">Print Report</button>
+  </div>
+</section>
+
+</div>
+
+<section class="card">
+  <h2><span class="section-number">11</span>Theoretical Background</h2>
+
+  <div class="theory-grid">
+    <div class="theory-box">
+      <h3>Independence in Probability</h3>
+      Two categorical random variables are independent
+      when their joint probability equals the product
+      of their marginal probabilities for all categories.
+      <p><b>P(X = i, F = j) = P(X = i)P(F = j)</b></p>
+    </div>
+    <div class="theory-box">
+      <h3>Independence in Statistics</h3>
+      The Chi-Square test compares observed frequencies
+      with the frequencies expected if two variables
+      were independent in the population.
+    </div>
+    <div class="theory-box">
+      <h3>Association vs. Causality</h3>
+      A statistically significant relationship
+      does not prove causation.
+      Other factors, confounding variables,
+      or sampling processes may explain the association.
+    </div>
+    <div class="theory-box">
+      <h3>Test Assumptions</h3>
+      Observations should be independent,
+      categories must be mutually exclusive,
+      and expected frequencies should be
+      sufficiently large for the Chi-Square approximation.
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Gender & Subject Preference · Statistics Coursework
+</footer>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+
+const subjects = [
+  "Mathematics",
+  "Science",
+  "English",
+  "History",
+  "Art"
+];
+
+// Simulated contingency data.
+// Each gender has 20 observations, total N = 60.
+const sampleCounts = [
+  {
+    gender:"Male",
+    counts:[9,6,2,2,1]
+  },
+  {
+    gender:"Female",
+    counts:[3,4,6,3,4]
+  },
+  {
+    gender:"Non-binary",
+    counts:[4,3,4,5,4]
+  }
+];
+
+let current = null;
+
+// Generate all 60 individual records.
+function createSample() {
+  const rows = ["X,F"];
+
+  sampleCounts.forEach(group => {
+    group.counts.forEach((count,j) => {
+      for(let k=0;k<count;k++) {
+        rows.push(group.gender+","+subjects[j]);
+      }
+    });
+  });
+
+  return rows.join("\n");
+}
+
+function loadSample() {
+  $("dataset").value = createSample();
+  analyze();
+}
+
+function clearDataset() {
+  $("dataset").value = "";
+  $("analysisResults").style.display = "none";
+  $("message").innerHTML = "";
+  current = null;
+}
+
+function safe(s) {
+  return String(s).replace(/[&<>"']/g,c=>({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#39;"
+  })[c]);
+}
+
+function fmt(x,d=3) {
+  return Number(x).toFixed(d);
+}
+
+function parseData(text) {
+  const lines = text.trim().split(/\r?\n/)
+    .map(x=>x.trim())
+    .filter(Boolean);
+
+  if(lines.length<2) {
+    throw Error("Please provide at least two observations.");
+  }
+
+  const data = lines.map((line,index)=>{
+    const parts = line.split(",").map(s=>s.trim());
+
+    if(parts.length!==2 || parts.some(s=>!s)) {
+      throw Error(
+        "Invalid row "+(index+1)+
+        ". Each row must contain X,F."
+      );
+    }
+
+    return parts;
+  });
+
+  const header=data[0].map(s=>s.toLowerCase());
+
+  if(header[0]==="x" && header[1]==="f") {
+    data.shift();
+  }
+
+  if(data.length<2) {
+    throw Error("Not enough observations.");
+  }
+
+  return data;
+}
+
+function contingency(data) {
+  const xs = [...new Set(data.map(r=>r[0]))];
+  const fs = [...new Set(data.map(r=>r[1]))];
+
+  if(xs.length<2 || fs.length<2) {
+    throw Error(
+      "Both variables must contain at least two categories."
+    );
+  }
+
+  const xIndex=new Map(xs.map((x,i)=>[x,i]));
+  const fIndex=new Map(fs.map((f,i)=>[f,i]));
+
+  const observed=xs.map(()=>
+    fs.map(()=>0)
+  );
+
+  data.forEach(([x,f])=>{
+    observed[xIndex.get(x)][fIndex.get(f)]++;
+  });
+
+  const rowTotals=observed.map(row=>
+    row.reduce((a,b)=>a+b,0)
+  );
+
+  const colTotals=fs.map((_,j)=>
+    observed.reduce((s,row)=>s+row[j],0)
+  );
+
+  const n=data.length;
+
+  const expected=observed.map((row,i)=>
+    row.map((_,j)=>
+      rowTotals[i]*colTotals[j]/n
+    )
+  );
+
+  const df=(xs.length-1)*(fs.length-1);
+
+  return {
+    xs,fs,observed,
+    rowTotals,colTotals,
+    expected,n,df
+  };
+}
+
+// Lanczos log-gamma approximation.
+function logGamma(z) {
+  const coefficients=[
+    0.99999999999980993,
+    676.5203681218851,
+    -1259.1392167224028,
+    771.32342877765313,
+    -176.6150291621406,
+    12.507343278686905,
+    -0.13857109526572012,
+    9.984369578019572e-6,
+    1.5056327351493116e-7
+  ];
+
+  if(z<0.5) {
+    return Math.log(Math.PI)
+      -Math.log(Math.sin(Math.PI*z))
+      -logGamma(1-z);
+  }
+
+  z--;
+
+  let x=coefficients[0];
+
+  for(let i=1;i<coefficients.length;i++) {
+    x+=coefficients[i]/(z+i);
+  }
+
+  const t=z+7.5;
+
+  return 0.5*Math.log(2*Math.PI)
+    +(z+0.5)*Math.log(t)
+    -t+Math.log(x);
+}
+
+// Regularized upper incomplete gamma function.
+// Q(a,x) gives the upper-tail probability.
+function gammaQ(a,x) {
+  if(x<=0) return 1;
+
+  const EPS=1e-14;
+  const MIN=1e-300;
+  const gln=logGamma(a);
+
+  if(x<a+1) {
+    let sum=1/a;
+    let delta=sum;
+    let ap=a;
+
+    for(let k=1;k<10000;k++) {
+      ap++;
+      delta*=x/ap;
+      sum+=delta;
+
+      if(Math.abs(delta)<Math.abs(sum)*EPS) {
+        break;
+      }
+    }
+
+    const lower=sum*Math.exp(
+      -x+a*Math.log(x)-gln
+    );
+
+    return Math.max(0,Math.min(1,1-lower));
+  }
+
+  let b=x+1-a;
+  let c=1/MIN;
+  let d=1/Math.max(Math.abs(b),MIN)
+    *Math.sign(b||1);
+  let h=d;
+
+  for(let i=1;i<10000;i++) {
+    const an=-i*(i-a);
+    b+=2;
+
+    d=an*d+b;
+    if(Math.abs(d)<MIN)d=MIN;
+
+    c=b+an/c;
+    if(Math.abs(c)<MIN)c=MIN;
+
+    d=1/d;
+    const delta=d*c;
+    h*=delta;
+
+    if(Math.abs(delta-1)<EPS)break;
+  }
+
+  return Math.max(
+    0,
+    Math.min(
+      1,
+      Math.exp(-x+a*Math.log(x)-gln)*h
+    )
+  );
+}
+
+// Chi-Square upper-tail probability.
+function chiSquareP(statistic,df) {
+  return gammaQ(df/2,statistic/2);
+}
+
+function createTable(xs,fs,values,totals=false,digits=0) {
+  let html="<table><thead><tr><th>X / F</th>";
+
+  fs.forEach(f=>{
+    html+="<th>"+safe(f)+"</th>";
+  });
+
+  if(totals)html+="<th>Total</th>";
+
+  html+="</tr></thead><tbody>";
+
+  xs.forEach((x,i)=>{
+    html+="<tr><td>"+safe(x)+"</td>";
+
+    fs.forEach((_,j)=>{
+      html+="<td>"+fmt(values[i][j],digits)+"</td>";
+    });
+
+    if(totals) {
+      const sum=values[i].reduce((a,b)=>a+b,0);
+      html+="<td><b>"+fmt(sum,digits)+"</b></td>";
+    }
+
+    html+="</tr>";
+  });
+
+  html+="</tbody>";
+
+  if(totals) {
+    html+="<tfoot><tr><td>Total</td>";
+
+    fs.forEach((_,j)=>{
+      const total=values.reduce(
+        (sum,row)=>sum+row[j],0
+      );
+      html+="<td>"+fmt(total,digits)+"</td>";
+    });
+
+    const grandTotal=values.flat().reduce(
+      (a,b)=>a+b,0
+    );
+
+    html+="<td>"+fmt(grandTotal,digits)+"</td>";
+    html+="</tr></tfoot>";
+  }
+
+  return html+"</table>";
+}
+
+function renderHeatmap(t) {
+  const max=Math.max(...t.observed.flat(),1);
+
+  let html="<table><thead><tr><th>Gender / Subject</th>";
+
+  t.fs.forEach(f=>{
+    html+="<th>"+safe(f)+"</th>";
+  });
+
+  html+="</tr></thead><tbody>";
+
+  t.xs.forEach((x,i)=>{
+    html+="<tr><td>"+safe(x)+"</td>";
+
+    t.fs.forEach((_,j)=>{
+      const value=t.observed[i][j];
+      const ratio=value/max;
+      const opacity=0.10+0.78*ratio;
+      const color=ratio>0.65?"white":"#183565";
+
+      html+=`
+        <td style="
+          background:rgba(48,101,217,${opacity});
+          color:${color};
+          font-weight:800
+        ">${value}</td>`;
+    });
+
+    html+="</tr>";
+  });
+
+  html+="</tbody></table>";
+
+  $("heatmap").innerHTML=html;
+}
+
+function renderBars(t) {
+  const largest=Math.max(
+    ...t.observed.flat(),
+    ...t.expected.flat(),
+    1
+  );
+
+  let html="";
+
+  t.xs.forEach((x,i)=>{
+    t.fs.forEach((f,j)=>{
+      const o=t.observed[i][j];
+      const e=t.expected[i][j];
+
+      html+=`
+        <div class="chart-row">
+          <div class="chart-label">
+            <b>${safe(x)} · ${safe(f)}</b>
+            <span>
+              Observed ${o} / Expected ${fmt(e,2)}
+            </span>
+          </div>
+
+          <div class="track">
+            <div class="fill"
+              style="width:${100*o/largest}%">
+            </div>
+          </div>
+
+          <div class="track">
+            <div class="fill expected"
+              style="width:${100*e/largest}%">
+            </div>
+          </div>
+        </div>`;
+    });
+  });
+
+  $("barChart").innerHTML=html;
+}
+
+function analyze() {
+  try {
+    const data=parseData($("dataset").value);
+    const t=contingency(data);
+
+    const {
+      xs,fs,observed,
+      rowTotals,colTotals,
+      expected,n,df
+    }=t;
+
+    let chi=0;
+
+    observed.forEach((row,i)=>{
+      row.forEach((o,j)=>{
+        const e=expected[i][j];
+        chi+=(o-e)*(o-e)/e;
+      });
+    });
+
+    const p=chiSquareP(chi,df);
+    const alpha=Number($("alpha").value);
+    const significant=p<alpha;
+
+    const v=Math.sqrt(
+      chi/(n*Math.min(xs.length-1,fs.length-1))
+    );
+
+    current={...t,chi,p,alpha,v};
+
+    $("message").innerHTML="";
+    $("analysisResults").style.display="block";
+
+    // Overview
+    $("totalN").textContent=n;
+    $("xCount").textContent=xs.length;
+    $("fCount").textContent=fs.length;
+    $("degrees").textContent=df;
+
+    // Observed table
+    $("observedTable").innerHTML=
+      createTable(xs,fs,observed,true,0);
+
+    // Joint and marginal relative percentages
+    const relative=observed.map(row=>
+      row.map(count=>100*count/n)
+    );
+
+    $("relativeTable").innerHTML=
+      createTable(xs,fs,relative,true,2);
+
+    // P(F|X): row percentages
+    const rowConditional=observed.map((row,i)=>
+      row.map(count=>
+        100*count/rowTotals[i]
+      )
+    );
+
+    $("rowConditional").innerHTML=
+      createTable(xs,fs,rowConditional,false,2);
+
+    // P(X|F): column percentages
+    const columnConditional=observed.map(row=>
+      row.map((count,j)=>
+        100*count/colTotals[j]
+      )
+    );
+
+    $("columnConditional").innerHTML=
+      createTable(xs,fs,columnConditional,false,2);
+
+    // Expected frequencies
+    $("expectedTable").innerHTML=
+      createTable(xs,fs,expected,true,3);
+
+    const small=expected.flat().filter(
+      e=>e<5
+    ).length;
+
+    const verySmall=expected.flat().filter(
+      e=>e<1
+    ).length;
+
+    const totalCells=xs.length*fs.length;
+
+    if(small>0) {
+      $("expectedWarning").innerHTML=`
+        <div class="note warning">
+          <b>Expected Frequency Warning:</b>
+          ${small} of ${totalCells} expected counts
+          are below 5, including ${verySmall}
+          below 1.
+          The asymptotic Chi-Square p-value
+          may be inaccurate.
+          Consider a larger sample or an appropriate
+          exact or simulation-based test.
+        </div>`;
+    } else {
+      $("expectedWarning").innerHTML=`
+        <div class="note">
+          All expected frequencies are at least 5.
+          This satisfies the common expected-count
+          guideline for the Chi-Square approximation.
+          Independence of observations must
+          also be justified.
+        </div>`;
+    }
+
+    // Chi-square results
+    $("chiValue").textContent=fmt(chi,4);
+
+    const formattedP=p<0.000001
+      ?p.toExponential(3)
+      :fmt(p,6);
+
+    $("pValue").textContent=formattedP;
+    $("alphaValue").textContent=fmt(alpha,2);
+    $("cramerValue").textContent=fmt(v,4);
+
+    const decision=significant
+      ?"Reject the Null Hypothesis"
+      :"Fail to Reject the Null Hypothesis";
+
+    const meaning=significant
+      ?`There is statistically significant evidence
+        of an association between gender
+        and subject preference at the selected
+        significance level.`
+      :`There is insufficient statistical evidence
+        of an association between gender
+        and subject preference at the selected
+        significance level. This does not prove
+        the variables are independent.`;
+
+    $("decision").innerHTML=`
+      <h3>${decision}</h3>
+      <p>${meaning}</p>
+      <p>
+        χ²(${df}) = ${fmt(chi,4)},
+        p = ${formattedP},
+        α = ${fmt(alpha,2)}.
+      </p>
+      <p>
+        Cramér's V = ${fmt(v,4)}.
+        This is an effect-size measure
+        for categorical association.
+      </p>`;
+
+    // Charts
+    renderHeatmap(t);
+    renderBars(t);
+
+    // Automatically generated conclusion
+    $("conclusion").innerHTML=`
+      <h3>Research Findings</h3>
+
+      <p>
+        This study examined the relationship between
+        gender and academic subject preference
+        using a dataset of ${n} observations.
+        The contingency table contained
+        ${xs.length} gender categories and
+        ${fs.length} subject categories.
+      </p>
+
+      <p>
+        A Pearson Chi-Square test of independence
+        produced a test statistic of
+        χ²(${df}) = ${fmt(chi,4)}
+        with a p-value of ${formattedP}.
+      </p>
+
+      <p>
+        At the ${fmt(alpha*100,0)}%
+        significance level, the decision is to
+        <b>${significant
+          ?"reject"
+          :"fail to reject"}</b>
+        the null hypothesis.
+        ${meaning}
+      </p>
+
+      <p>
+        The estimated association strength,
+        measured by Cramér's V,
+        was ${fmt(v,4)}.
+      </p>
+
+      <p>
+        <b>Association versus causation:</b>
+        This test evaluates statistical association,
+        not cause and effect.
+        Even a statistically significant result
+        cannot establish that gender causes
+        differences in subject preference.
+        Other factors may influence preferences.
+      </p>
+
+      <p>
+        <b>Study limitation:</b>
+        These observations were generated
+        as an educational example rather than
+        collected using a probability sample.
+        Therefore, results should not be generalized
+        to a real student population.
+        ${small>0
+          ?"Some expected counts are also below 5, so the asymptotic p-value requires caution."
+          :""}
+      </p>`;
+
+  } catch(error) {
+    current=null;
+    $("analysisResults").style.display="none";
+    $("message").innerHTML=`
+      <div class="note error">
+        ${safe(error.message)}
+      </div>`;
+  }
+}
+
+function exportCSV() {
+  if(!current)return;
+
+  const t=current;
+
+  const rows=[
+    ["Gender / Subject",...t.fs,"Total"],
+    ...t.xs.map((x,i)=>[
+      x,...t.observed[i],t.rowTotals[i]
+    ]),
+    ["Total",...t.colTotals,t.n]
+  ];
+
+  const csv=rows.map(row=>
+    row.map(value=>
+      '"'+String(value).replace(/"/g,'""')+'"'
+    ).join(",")
+  ).join("\r\n");
+
+  const file=new Blob([csv],{
+    type:"text/csv;charset=utf-8"
+  });
+
+  const url=URL.createObjectURL(file);
+  const link=document.createElement("a");
+
+  link.href=url;
+  link.download="gender_subject_contingency.csv";
+  link.click();
+
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+// Load the 60-student example automatically.
+loadSample();
+
+</script>
+
+</body>
+</html>
